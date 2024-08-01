@@ -68,7 +68,6 @@ function switchSpendings(event){
         });    
         spendingSection.innerHTML = spendingsData;
     } else {
-        console.log('nope')
         spendingSection.innerHTML = `You have no categories`;
     }
 }
