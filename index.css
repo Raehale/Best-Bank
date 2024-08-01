@@ -231,12 +231,12 @@ h3 {
     content: '';
     display: block;
     position: absolute;
-    background: rgba(255, 255, 255, 1);
+    background: rgba(255, 255, 255, 0);
     width: 60px;
     height: 100%;
     top: 0;
     filter: blur(30px);
-    transform: translateX(-100px) skewX(-15deg);
+    transform: translateX(-50px) skewX(-15deg);
   }
 
   &:hover {
@@ -245,6 +245,7 @@ h3 {
 
     &::before,
     &::after {
+      background: rgba(255, 255, 255, 1);
       transform: translateX(300px) skewX(-15deg);
       transition: 0.7s;
     }

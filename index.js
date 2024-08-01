@@ -9,7 +9,7 @@ function renderAccounts() {
 
     accounts.forEach((account, index) => {
         const accountHtml = `
-            <div class="accounts" id="account-${index}">
+            <div class="accounts" id="account-${index}" data-index="${index}">
                 <p class="type-of-account">${account.title}</p>
                 <p class="money">$${account.balance}</p>
             </div>
@@ -21,9 +21,10 @@ function renderAccounts() {
 
     // Add event listeners to each account
     accounts.forEach((account, index) => {
-        document.getElementById(`account-${index}`).addEventListener('click', function() {
+        document.getElementById(`account-${index}`).addEventListener('click', function(event) {
             document.querySelectorAll('.accounts').forEach(el => el.style.backgroundColor = '');
             this.style.backgroundColor = '#FFA724';
+            switchSpendings(event);
         });
     });
 }
@@ -51,3 +52,23 @@ function renderSpendings() {
 renderAccounts();
 renderSpendings();
 
+function switchSpendings(event){
+    let selectedAccount = accounts[event.target.dataset.index]
+    let spendingsData = '';
+
+    if (selectedAccount.spendings.length > 0){
+        selectedAccount.spendings.forEach(spending => {
+            let spendingHtml = `
+                <div class="spending-category">
+                    <p class="spending-title">${spending.category}</p>
+                    <p class="spending-money">$${spending.spent}</p>
+                </div>
+            `;
+            spendingsData += spendingHtml;
+        });    
+        spendingSection.innerHTML = spendingsData;
+    } else {
+        console.log('nope')
+        spendingSection.innerHTML = `You have no categories`;
+    }
+}
