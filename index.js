@@ -71,3 +71,57 @@ function switchSpendings(event){
         spendingSection.innerHTML = `You have no categories`;
     }
 }
+
+// Open Modal
+const payButton = document.querySelector('.pay-button');
+const modal = document.getElementById('payModal');
+const span = document.querySelector('.close');
+
+payButton.onclick = function() {
+    modal.style.display = "block";
+}
+
+span.onclick = function() {
+    modal.style.display = "none";
+}
+
+window.onclick = function(event) {
+    if (event.target == modal) {
+        modal.style.display = "none";
+    }
+}
+
+// Payment Logic
+const confirmPaymentButton = document.getElementById('confirmPayment');
+
+confirmPaymentButton.addEventListener('click', function() {
+    const accountType = document.getElementById('account').value;
+    const amount = parseFloat(document.getElementById('amount').value);
+
+    if (!amount || amount <= 0) {
+        alert('Please enter a valid amount.');
+        return;
+    }
+
+    let selectedAccount;
+    if (accountType === 'main') {
+        // Assuming index 0 is Main Account
+        selectedAccount = accounts[0];  
+    } else if (accountType === 'expenses') {
+        // Assuming index 1 is Expenses
+        selectedAccount = accounts[1];  
+    } else if (accountType === 'savings') {
+        // Assuming index 2 is Savings
+        selectedAccount = accounts[2];  
+    }
+
+    if (selectedAccount && selectedAccount.balance >= amount) {
+        selectedAccount.balance -= amount;
+        // Re-render accounts to update UI 
+        renderAccounts();  
+        alert('Payment successful!');
+        modal.style.display = 'none';
+    } else {
+        alert('Insufficient funds.');
+    }
+});
