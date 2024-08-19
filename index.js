@@ -53,7 +53,7 @@ renderAccounts();
 renderSpendings();
 
 function switchSpendings(event){
-    let selectedAccount = accounts[event.target.dataset.index]
+    let selectedAccount = accounts[event.target.dataset.index];
     let spendingsData = '';
 
     if (selectedAccount.spendings.length > 0){
@@ -72,22 +72,34 @@ function switchSpendings(event){
     }
 }
 
-// Open Modal
+// Modal Logic
 const payButton = document.querySelector('.pay-button');
 const modal = document.getElementById('payModal');
 const span = document.querySelector('.close');
 
+// Ensure modal is hidden on load
+document.addEventListener('DOMContentLoaded', function() {
+    modal.style.display = "none"; 
+    
+});
+
+// Show modal when the Pay button is clicked
 payButton.onclick = function() {
-    modal.style.display = "block";
+    modal.style.display = "flex"; 
+    
 }
 
+// Close the modal when clicking the close button
 span.onclick = function() {
-    modal.style.display = "none";
+    modal.style.display = "none"; 
+    // Hide the modal when the close button is clicked
 }
 
+// Close the modal when clicking outside the modal content
 window.onclick = function(event) {
-    if (event.target == modal) {
-        modal.style.display = "none";
+    if (event.target === modal) {
+        modal.style.display = "none"; 
+       
     }
 }
 
@@ -105,22 +117,23 @@ confirmPaymentButton.addEventListener('click', function() {
 
     let selectedAccount;
     if (accountType === 'main') {
-        // Assuming index 0 is Main Account
         selectedAccount = accounts[0];  
+        // Assuming index 0 is Main Account
     } else if (accountType === 'expenses') {
-        // Assuming index 1 is Expenses
         selectedAccount = accounts[1];  
+        // Assuming index 1 is Expenses
     } else if (accountType === 'savings') {
-        // Assuming index 2 is Savings
         selectedAccount = accounts[2];  
+        // Assuming index 2 is Savings
     }
 
     if (selectedAccount && selectedAccount.balance >= amount) {
         selectedAccount.balance -= amount;
-        // Re-render accounts to update UI 
         renderAccounts();  
+        // Re-render accounts to update UI
         alert('Payment successful!');
-        modal.style.display = 'none';
+        modal.style.display = 'none';  
+        // Hide modal after payment
     } else {
         alert('Insufficient funds.');
     }
